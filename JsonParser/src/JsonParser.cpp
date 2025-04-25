@@ -367,7 +367,7 @@ RBuf* CJsonParser::parseNumber(CConsumeString* aJson)
 	RBuf *string = new RBuf();
 	
 	TChar c = aJson->charAt(0);
-	while ( c>= '0' && c<='9' )
+	while ( c>= '0' && c<='9' || c == '-' || c == '.' )
 		{
 		TInt errno;
 		if ( ( errno = string->ReAlloc(string->Length()+1)) != KErrNone )
