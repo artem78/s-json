@@ -184,8 +184,17 @@ TInt CJsonParser::GetParameterValue(const TDesC& aParameter, TAny* aValue,RPoint
 		if ( tmp.Val(tmpIndex) == KErrNone )
 			{
 			if ( tmpIndex < aJson->Count() )
+				{
 				if ( (*aJson)[tmpIndex]->iType == EJsonArray || (*aJson)[tmpIndex]->iType == EJsonObject )
 					return GetParameterValue(  aParameter.Right(aParameter.Length()-i-1),aValue,(RPointerArray<jsonStruct>*)(*aJson)[tmpIndex]->iVal );
+				else if ( (*aJson)[tmpIndex]->iType == EJsonNumber || (*aJson)[tmpIndex]->iType == EJsonString )
+					{
+					if ( ((TDes*)aValue)->MaxLength() < (*(RBuf*)(*aJson)[tmpIndex]->iVal).Length() )
+						return EFalse;
+					((TDes*)aValue)->Copy( (*(RBuf*)(*aJson)[tmpIndex]->iVal) );
+					return ETrue;
+					}
+				}
 			}
 		else
 			{
@@ -210,7 +219,8 @@ TInt CJsonParser::GetParameterValue(const TDesC& aParameter, TAny* aValue,RPoint
 							
 						case EJsonNumber:
 						case EJsonString:							
-							if ( ((TDes*)aValue)->MaxLength() < ((*aJson)[x]->iParam)->Length() )
+							//if ( ((TDes*)aValue)->MaxLength() < ((*aJson)[x]->iParam)->Length() )  // iParam ???
+							if ( ((TDes*)aValue)->MaxLength() < (*(RBuf*)(*aJson)[x]->iVal).Length() )
 								return EFalse;
 							((TDes*)aValue)->Copy( (*(RBuf*)(*aJson)[x]->iVal) );
 							return ETrue;
