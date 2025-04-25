@@ -58,11 +58,18 @@ void CJsonParser::Close( RPointerArray<jsonStruct>* aJson )
 			case EJsonFixedValue:
 			case EJsonString:
 			case EJsonNumber:
-								
-				(*aJson)[x]->iParam->Close();
-				((RBuf*)(*aJson)[x]->iVal)->Close();
-				delete (*aJson)[x]->iParam;
-				delete ((RBuf*)(*aJson)[x]->iVal);				
+				
+				if ((*aJson)[x]->iParam != NULL)
+					{
+					(*aJson)[x]->iParam->Close();
+					delete (*aJson)[x]->iParam;
+					}
+				
+				if ((*aJson)[x]->iVal != NULL)
+					{
+					((RBuf*)(*aJson)[x]->iVal)->Close();
+					delete ((RBuf*)(*aJson)[x]->iVal);
+					}
 				
 				break;
 			case EJsonArray:
