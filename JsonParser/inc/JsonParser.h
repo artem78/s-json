@@ -31,7 +31,7 @@
 #include "ConsumeString.h"
 
 // CLASS DECLARATION
-class CJsonParser
+class CJsonParser : public CBase
 	{
 	
 public:	

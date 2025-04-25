@@ -28,7 +28,7 @@
 #include <f32file.h>
 #include "JsonParser.h"
 
-CJsonParser::CJsonParser() : iJson(0), iJsonEncoded(0)
+CJsonParser::CJsonParser()
 	{
 	}
 
