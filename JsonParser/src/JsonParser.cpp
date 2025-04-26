@@ -638,6 +638,20 @@ void CJsonParser::addNumber(TInt aParameter)
 	iJsonEncoded->AppendNum(aParameter);
 	}
 
+void CJsonParser::AddFloat(const TReal64 aVal)
+	{
+	TRealFormat fmt;
+	fmt.iPoint = '.';
+	
+	TInt errno;		
+	if ( ( errno = iJsonEncoded->ReAlloc(iJsonEncoded->Length() + 32)) != KErrNone )
+		{
+		User::Panic(_L("CJsonParser: no memory"),errno);
+		}	
+	
+	iJsonEncoded->AppendNum(aVal, fmt);
+	}
+
 void CJsonParser::PrintDebug(RPointerArray<jsonStruct>* aJson,TInt aLevel)
 	{	
 	if ( aJson == NULL )

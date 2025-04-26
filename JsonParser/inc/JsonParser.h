@@ -50,6 +50,7 @@ public:
 	void closeArray();
 	void addString(const TDesC& aParameter);
 	void addNumber(TInt aParameter);
+	void AddFloat(const TReal64 aVal);
 	void addFixedValue(TBool aParameter);
 	void addParameter(const TDesC& aParameter);
 	void addNext();
