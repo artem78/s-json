@@ -78,47 +78,49 @@ void encode_data_example()
 
 # Updated decoding example
 
+JSON data (`jsonData` variable contents):
+
+```json
+{
+	"first_name": "John",
+	"last_name": "Smith",
+	"is_alive": true,
+	"age": 27,
+	"address": {
+		"street_address": "21 2nd Street",
+		"city": "New York",
+		"state": "NY",
+		"postal_code": "10021-3100"
+	},
+	"phone_numbers": [
+		{
+			"type": "home",
+			"number": "212 555-1234"
+		},
+		{
+			"type": "office",
+			"number": "646 555-4567"
+		}
+	],
+	"children": [
+		"Catherine",
+		"Thomas",
+		"Trevor"
+	],
+	"spouse": null,
+	"rating": 9.87654321,
+	"num1": 1.234e-5,
+	"num2": -5.256E7
+}
+```
+
+Code:
+
 ```cpp
-void decode_example2L()
-	{
-	_LIT(KJsonData,
-		"{"
-			"\"first_name\": \"John\","
-			"\"last_name\": \"Smith\","
-			"\"is_alive\": true,"
-			"\"age\": 27,"
-			"\"address\": {"
-				"\"street_address\": \"21 2nd Street\","
-				"\"city\": \"New York\","
-				"\"state\": \"NY\","
-				"\"postal_code\": \"10021-3100\""
-			"},"
-			"\"phone_numbers\": ["
-				"{"
-					"\"type\": \"home\","
-					"\"number\": \"212 555-1234\""
-				"},"
-				"{"
-					"\"type\": \"office\","
-					"\"number\": \"646 555-4567\""
-				"}"
-			"],"
-			"\"children\": ["
-				"\"Catherine\","
-				"\"Thomas\","
-				"\"Trevor\""
-			"],"
-			"\"spouse\": null,"
-			"\"rating\": 9.87654321,"
-			"\"num1\": 1.234e-5,"
-			"\"num2\": -5.256E7"
-		"}"
-	);
-	
 	CJsonParser* parser = new (ELeave) CJsonParser;
 	CleanupStack::PushL(parser);
 	
-	parser->StartDecodingL(KJsonData);
+	parser->StartDecodingL(jsonData);
 	
 	TInt count;
 	
@@ -186,7 +188,6 @@ void decode_example2L()
 	
 	
 	CleanupStack::PopAndDestroy(parser);
-	}
 ```
 
 Result:
