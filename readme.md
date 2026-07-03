@@ -1,5 +1,5 @@
 
-        S-json -- A Symbian C/C++ JSON Parser
+# S-json -- A Symbian C/C++ JSON Parser
 
 ===========================================================	
 
@@ -17,8 +17,8 @@ Release Version 1.1 includes:
 	./JsonParser/src/JsonParser.cpp
 	
 Changelog:
- 1.1 16 bit descriptor compatibility
- 1.0 Initial Release	
+- 1.1 16 bit descriptor compatibility
+- 1.0 Initial Release	
 
 ===========================================================	
 
@@ -32,6 +32,7 @@ Or get in contact at LuisJavier.Chico [at] gmail [dot] com
 
 Below are some coding and decoding examples for Symbian C++
 
+```cpp
 // json decoding example
 void decode_string_example()
 	{
@@ -47,7 +48,9 @@ void decode_string_example()
 	TBuf<320> Id;
 	int id = de.GetParameterValue(_L("[1][interactions][1][ticket]"),&Id);
 	}
+```
 
+```cpp
 // json encoding example
 void encode_data_example()
 	{
@@ -71,3 +74,4 @@ void encode_data_example()
 	jsonPost->Close();
 	delete (jsonPost);
 	}
+```
