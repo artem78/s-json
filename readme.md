@@ -75,3 +75,120 @@ void encode_data_example()
 	delete (jsonPost);
 	}
 ```
+
+# Updated decoding example
+
+```cpp
+void decode_example2L()
+	{
+	_LIT(KJsonData,
+		"{"
+			"\"first_name\": \"John\","
+			"\"last_name\": \"Smith\","
+			"\"is_alive\": true,"
+			"\"age\": 27,"
+			"\"address\": {"
+				"\"street_address\": \"21 2nd Street\","
+				"\"city\": \"New York\","
+				"\"state\": \"NY\","
+				"\"postal_code\": \"10021-3100\""
+			"},"
+			"\"phone_numbers\": ["
+				"{"
+					"\"type\": \"home\","
+					"\"number\": \"212 555-1234\""
+				"},"
+				"{"
+					"\"type\": \"office\","
+					"\"number\": \"646 555-4567\""
+				"}"
+			"],"
+			"\"children\": ["
+				"\"Catherine\","
+				"\"Thomas\","
+				"\"Trevor\""
+			"],"
+			"\"spouse\": null,"
+			"\"rating\": 9.87654321,"
+			"\"num1\": 1.234e-5,"
+			"\"num2\": -5.256E7"
+		"}"
+	);
+	
+	CJsonParser* parser = new (ELeave) CJsonParser;
+	CleanupStack::PushL(parser);
+	
+	parser->StartDecodingL(KJsonData);
+	
+	TInt count;
+	
+	count = parser->GetParameterCount(_L("[phone_numbers]"));
+	console->Printf(_L("phones: %d\n"), count);
+	
+	count = parser->GetParameterCount(_L("[children]"));
+	console->Printf(_L("children: %d\n"), count);
+	
+	TBuf<64> buf;
+	TInt num;
+	TReal numf;
+	
+	TBool res = parser->GetParameterValue(_L("[address][city]"), &buf);
+	if (not res)
+		User::Leave(KErrNotFound);
+	console->Printf(_L("address city: %S\n"), &buf);
+	
+	res = parser->GetParameterValue(_L("[children][2]"), &buf);
+	if (not res)
+		User::Leave(KErrNotFound);
+	console->Printf(_L("last child: %S\n"), &buf);
+	
+	res = parser->GetParameterValue(_L("[age]"), &buf);
+	if (not res)
+		User::Leave(KErrNotFound);
+	console->Printf(_L("age: %S\n"), &buf);
+	
+	// the same as above
+	parser->GetParameterValueL(_L("[age]"), num);
+	console->Printf(_L("age (again): %d\n"), num);
+	
+	res = parser->GetParameterValue(_L("[rating]"), &buf);
+	if (not res)
+		User::Leave(KErrNotFound);
+	console->Printf(_L("rating: %S\n"), &buf);
+	
+	// the same as above
+	parser->GetParameterValueL(_L("[rating]"), numf);
+	console->Printf(_L("rating (again): %.10f\n"), numf);
+	
+	res = parser->GetParameterValue(_L("[num1]"), &buf);
+	if (not res)
+		User::Leave(KErrNotFound);
+	console->Printf(_L("num1: %S\n"), &buf);
+	
+	// the same as above
+	parser->GetParameterValueL(_L("[num1]"), numf);
+	console->Printf(_L("num1 (again): %.10f\n"), numf);
+	
+	res = parser->GetParameterValue(_L("[num2]"), &buf);
+	if (not res)
+		User::Leave(KErrNotFound);
+	console->Printf(_L("num2: %S\n"), &buf);
+	
+	// the same as above
+	parser->GetParameterValueL(_L("[num2]"), numf);
+	console->Printf(_L("num2 (again): %.10f\n"), numf);
+	
+	res = parser->GetParameterValue(_L("[XXXXX]"), &buf);
+	if (res)
+		console->Printf(_L("XXXXX found\n"));
+	else
+		console->Printf(_L("XXXXX not found!\n"));
+	
+	
+	CleanupStack::PopAndDestroy(parser);
+	}
+```
+
+Result:
+
+![](out.png)
