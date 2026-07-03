@@ -692,4 +692,44 @@ void CJsonParser::PrintDebug(RPointerArray<jsonStruct>* aJson,TInt aLevel)
 			}
 		}
 	}
+
+
+// several new methods added for ease of use
+
+void CJsonParser::GetParameterValueL(const TDesC &aParam, TDes &aVal)
+	{
+	//aVal = KNullDesC;
+	aVal.Zero();
+	
+	if (!this->GetParameterValue(aParam, &aVal))
+		{
+		User::Leave(KErrNotFound);
+		}
+	}
+
+void CJsonParser::GetParameterValueL(const TDesC &aParam, TReal64 &aVal)
+	{
+	TLex lex;
+	TBuf<32> buff /*= KNullDesC*/;
+	//buff.Zero(); // not mandatory
+	aVal = /*KNaN*/ 0.0 / 0.0;
+	
+	this->GetParameterValueL(aParam, buff);
+	lex.Assign(buff);
+	User::LeaveIfError(lex.Val(aVal, '.'));
+	}
+
+void CJsonParser::GetParameterValueL(const TDesC &aParam, TInt &aVal)
+	{
+	TLex lex;
+	TBuf<32> buff /*= KNullDesC*/;
+	//buff.Zero(); // not mandatory
+	aVal = /*KNaN*/ 0 / 0;
+	
+	this->GetParameterValueL(aParam, buff);
+	lex.Assign(buff);
+	User::LeaveIfError(lex.Val(aVal));
+	}
+
+
 //// End of File

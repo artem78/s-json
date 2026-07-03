@@ -42,6 +42,11 @@ public:
 	TInt 	GetParameterCount(const TDesC& aParameter);
 	TBool 	GetParameterValue(const TDesC& aParameter, TAny* aValue);
 	
+	// several new methods added:
+	void GetParameterValueL(const TDesC &aParam, TDes &aVal);
+	void GetParameterValueL(const TDesC &aParam, TReal64 &aVal);
+	void GetParameterValueL(const TDesC &aParam, TInt &aVal);
+	
 	void StartEncoding(RBuf* aJsonEncoded);
 	void closeEncoding();
 	void openObject();
